@@ -50,8 +50,12 @@ const Comments: CollectionConfig = {
 
       hooks: {
         beforeChange: [
-          ({ req: { user } }) => {
-            return user?.id;
+          ({ req: { user }, operation, data }) => {
+            if (operation === "create") {
+              return user?.id;
+            }
+            // Assign self to author if not exist
+            return data.author;
           },
         ],
       },

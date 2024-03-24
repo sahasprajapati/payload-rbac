@@ -15,7 +15,7 @@ export const adminAndSelfPermissionAccessChecker: (
         return true;
       }
       return {
-        commenter: {
+        id: {
           equals: user?.id,
         },
       };

@@ -44,8 +44,10 @@ const Articles: CollectionConfig = {
       },
       hooks: {
         beforeChange: [
-          ({ req: { user } }) => {
-            return user?.id;
+          ({ req: { user }, data, operation }) => {
+            // Assign self to author if not exist
+            if (operation === "create") return user?.id;
+            return data.author;
           },
         ],
       },
