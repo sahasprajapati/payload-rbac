@@ -32,3 +32,16 @@ export const checkUserPermission = (
 
   return false;
 };
+
+export const checkIsAdmin = (user: User = undefined): boolean => {
+  if (user) {
+    if (
+      user?.roles?.some((role: Role) => {
+        return role?.isAdmin ?? false;
+      })
+    )
+      return true;
+  }
+
+  return false;
+};

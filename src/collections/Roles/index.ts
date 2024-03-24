@@ -29,7 +29,11 @@ const Roles: CollectionConfig = {
   },
   fields: [
     { type: "text", name: "name", unique: true, required: true },
-
+    {
+      type: "checkbox",
+      name: "isAdmin",
+      defaultValue: false,
+    },
     {
       type: "array",
       name: "permissions",

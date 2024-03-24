@@ -1,7 +1,7 @@
 import { Access } from "payload/config";
 import { Config } from "payload/generated-types";
 import { ActionsEnum } from "../../../enums/actions";
-import { checkUserPermission } from "../../../access/admins";
+import { checkIsAdmin, checkUserPermission } from "../../../access/admins";
 
 export const adminAndSelfPermissionAccessChecker: (
   subject: keyof Config["collections"],
@@ -10,10 +10,18 @@ export const adminAndSelfPermissionAccessChecker: (
   (subject, action) =>
   ({ req: { user } }) => {
     if (checkUserPermission(user, subject, action)) {
+      // Only if admin has permission give access, Otherwise only give access to the comment author
+      if (checkIsAdmin(user)) {
+        return true;
+      }
       return {
-        commenter: {
-          equals: user?.id,
-        },
+        or: [
+          {
+            commenter: {
+              equals: user?.id,
+            },
+          },
+        ],
       };
     }
     return false;

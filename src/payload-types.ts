@@ -43,6 +43,7 @@ export interface User {
 export interface Role {
   id: string;
   name: string;
+  isAdmin?: boolean | null;
   permissions?:
     | {
         subject?: ('articles' | 'comments' | 'users' | 'roles') | null;
@@ -62,8 +63,7 @@ export interface Article {
   title: string;
   slug: string;
   description: string;
-  comments?: (string | Comment)[] | null;
-  author: string | User;
+  author?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -73,6 +73,7 @@ export interface Article {
  */
 export interface Comment {
   id: string;
+  article: string | Article;
   comment: string;
   commenter?: (string | null) | User;
   updatedAt: string;
